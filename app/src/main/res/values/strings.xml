@@ -1,14 +1,10 @@
 <resources>
-    <string name="app_name">JuegoCartas</string>
-    <string name="boton_init_play">Jugar</string>
-    <string name="boton_init_quit">Salir</string>
-    <string name="boton_juego_reinit">Reiniciar</string>
+    <string name="app_name">Juego memorama de cartas</string>
     <string name="pregunta0">La Arena hondartza bi zatitan banatzen da: Zierbena eta Muskiz</string>
     <string name="pregunta1">Jarduera eta  egiten dira hemen, haien artean famatuena surfa.</string>
     <string name="pregunta2">Hondartza Bizkaiko handienetariko bat da, zehazki 966 metro ditu.</string>
     <string name="pregunta3">Harearen hondartzak balio botaniko handiko ingurumen-eremua du, dunei esker.</string>
     <string name="pregunta4">Barbadun ibaia ateratzen da, zubi baten bidez gurutzatzen dena.</string>
-    <string name="boton_juego_quit">Salir</string>
-    <string name="salir_del_juego">Salir del juego</string>
-    <string name="reiniciar_juego">Reiniciar juego</string>
+    <string name="reiniciar_juego">Reiniciar</string>
+
 </resources>

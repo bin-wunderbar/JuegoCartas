@@ -42,6 +42,8 @@ class Juego : Activity() {
     private var bloqueo = false
     private var aciertos = 0
     private val handler = Handler()
+
+    //______________________________________________________________________________________________
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_juego)
@@ -116,7 +118,7 @@ class Juego : Activity() {
     private fun comprobar(i: Int, pregunta: Boolean, imgb: ImageButton?) {
         if (primero == null)
         {
-            println("asi queda la orden del array")
+            println("asi queda la orden del los arrays")
             println(Arrays.toString(arrayDesordenadoPreguntas.toArray()))
             println(Arrays.toString(arrayDesordenadoRespuestas.toArray()))
             if (pregunta) 
@@ -151,7 +153,7 @@ class Juego : Activity() {
                 aciertos++
                 if (aciertos == respuestas.size)
                 {
-                    println("En hora buena se ha completado el juego...")
+                    println("Game over...")
                 }
             } else 
             {
