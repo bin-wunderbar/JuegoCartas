@@ -4,6 +4,7 @@ package com.example.juegocartas
 import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -41,7 +42,6 @@ class Juego : Activity() {
     private var numeroSegundo = 0
     private var bloqueo = false
     private var aciertos = 0
-    private val handler = Handler()
 
     //______________________________________________________________________________________________
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,7 +157,7 @@ class Juego : Activity() {
                 }
             } else 
             {
-                handler.postDelayed({
+                Handler(Looper.myLooper()?:return).postDelayed({
                     primero!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
                     primero!!.setImageResource(fondo)
                     primero!!.isEnabled = true
@@ -210,7 +210,7 @@ class Juego : Activity() {
             tableroPreguntas[i]!!.setImageResource(preguntas[arrayDesordenadoPreguntas[i]])
         }
         // demora  medio segundo luego esconde las imagenes puestas a los buttones
-        handler.postDelayed({
+        Handler(Looper.myLooper()?:return).postDelayed({
             for (i in 0..4) 
             {
                 tableroRespuestas[i]!!.scaleType = ImageView.ScaleType.CENTER_CROP
