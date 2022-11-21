@@ -8,24 +8,20 @@ import android.os.Looper
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
+import com.example.juegocartas.databinding.ActivityJuegoBinding
 import java.util.*
 
 class Juego : Activity() {
     //______________________________________________________________________________________________
     // variables para los componentes de la vista
-    private lateinit var imb00: ImageButton
-    private lateinit var imb01: ImageButton
-    private lateinit var imb02: ImageButton
-    private lateinit var imb03: ImageButton
-    private lateinit var imb04: ImageButton
-    private lateinit var imb08: ImageButton
-    private lateinit var imb09: ImageButton
-    private lateinit var imb10: ImageButton
-    private lateinit var imb11: ImageButton
-    private lateinit var imb12: ImageButton
     private var tableroRespuestas = arrayOfNulls<ImageButton>(5)
     private var tableroPreguntas = arrayOfNulls<ImageButton>(5)
     private lateinit var botonReiniciar: Button
+    private lateinit var resultado: TextView
+    private lateinit var puntos: String
+    private lateinit var binding: ActivityJuegoBinding
+
 
     //______________________________________________________________________________________________
     //imagenes
@@ -46,41 +42,33 @@ class Juego : Activity() {
     //______________________________________________________________________________________________
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_juego)
+        binding = ActivityJuegoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
     }
 
     //______________________________________________________________________________________________
     private fun cargarTablero() {
-        imb00 = findViewById(R.id.boton00)
-        imb01 = findViewById(R.id.boton01)
-        imb02 = findViewById(R.id.boton02)
-        imb03 = findViewById(R.id.boton03)
-        imb04 = findViewById(R.id.boton04)
+        tableroPreguntas[0] = binding.boton00
+        tableroPreguntas[1] = binding.boton01
+        tableroPreguntas[2] = binding.boton02
+        tableroPreguntas[3] = binding.boton03
+        tableroPreguntas[4] = binding.boton04
 
-        imb08 = findViewById(R.id.boton08)
-        imb09 = findViewById(R.id.boton09)
-        imb10 = findViewById(R.id.boton10)
-        imb11 = findViewById(R.id.boton11)
-        imb12 = findViewById(R.id.boton12)
-
-        tableroPreguntas[0] = imb00
-        tableroPreguntas[1] = imb01
-        tableroPreguntas[2] = imb02
-        tableroPreguntas[3] = imb03
-        tableroPreguntas[4] = imb04
-
-        tableroRespuestas[0] = imb08
-        tableroRespuestas[1] = imb09
-        tableroRespuestas[2] = imb10
-        tableroRespuestas[3] = imb11
-        tableroRespuestas[4] = imb12
+        tableroRespuestas[0] = binding.boton08
+        tableroRespuestas[1] = binding.boton09
+        tableroRespuestas[2] = binding.boton10
+        tableroRespuestas[3] = binding.boton11
+        tableroRespuestas[4] = binding.boton12
     }
 
     //______________________________________________________________________________________________
     private fun cargarBotones() {
         botonReiniciar = findViewById(R.id.botonJuegoReiniciar)
         botonReiniciar.setOnClickListener { init() }
+        resultado = binding.tvAciertos
+        resultado.text = ""
+        puntos = "Has acertado: "
         aciertos = 0
     }
 
@@ -124,7 +112,7 @@ class Juego : Activity() {
             if (pregunta) 
             {
                 primero = imgb
-                primero!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                primero!!.scaleType = ImageView.ScaleType.CENTER_CROP
                 primero!!.setImageResource(preguntas[arrayDesordenadoPreguntas[i]])
                 primero!!.isEnabled = false
                 numeroPrimero = arrayDesordenadoPreguntas[i]
@@ -132,7 +120,7 @@ class Juego : Activity() {
             } else
             {
                 primero = imgb
-                primero!!.scaleType = ImageView.ScaleType.CENTER
+                primero!!.scaleType = ImageView.ScaleType.CENTER_CROP
                 primero!!.setImageResource(respuestas[arrayDesordenadoRespuestas[i]])
                 primero!!.isEnabled = false
                 numeroPrimero = arrayDesordenadoRespuestas[i]
@@ -151,6 +139,9 @@ class Juego : Activity() {
                 primero = null
                 bloqueo = false
                 aciertos++
+                puntos += aciertos
+                resultado.text = puntos
+                puntos ="Has acertado: "
                 if (aciertos == respuestas.size)
                 {
                     println("Game over...")
@@ -158,10 +149,10 @@ class Juego : Activity() {
             } else 
             {
                 Handler(Looper.myLooper()?:return).postDelayed({
-                    primero!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    primero!!.scaleType = ImageView.ScaleType.CENTER_CROP
                     primero!!.setImageResource(fondo)
                     primero!!.isEnabled = true
-                    imgb!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    imgb!!.scaleType = ImageView.ScaleType.CENTER_CROP
                     imgb.setImageResource(fondo)
                     imgb.isEnabled = true
                     bloqueo = false
@@ -175,7 +166,7 @@ class Juego : Activity() {
     private fun setRespuesta(i: Int, imgb: ImageButton?)
     {
         bloqueo = true
-        imgb!!.scaleType = ImageView.ScaleType.CENTER
+        imgb!!.scaleType = ImageView.ScaleType.CENTER_CROP
         imgb.setImageResource(respuestas[arrayDesordenadoRespuestas[i]])
         imgb.isEnabled = false
         numeroSegundo = arrayDesordenadoRespuestas[i]
@@ -185,7 +176,7 @@ class Juego : Activity() {
     private fun setPregunta(i: Int, imgb: ImageButton?)
     {
         bloqueo = true
-        imgb!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        imgb!!.scaleType = ImageView.ScaleType.CENTER_CROP
         imgb.setImageResource(preguntas[arrayDesordenadoPreguntas[i]])
         imgb.isEnabled = false
         numeroSegundo = arrayDesordenadoPreguntas[i]
@@ -205,16 +196,16 @@ class Juego : Activity() {
         for (i in 0..4) 
         {
             tableroRespuestas[i]!!.scaleType = ImageView.ScaleType.CENTER_CROP
-            tableroPreguntas[i]!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            tableroPreguntas[i]!!.scaleType = ImageView.ScaleType.CENTER_CROP
             tableroRespuestas[i]!!.setImageResource(respuestas[arrayDesordenadoRespuestas[i]])
             tableroPreguntas[i]!!.setImageResource(preguntas[arrayDesordenadoPreguntas[i]])
         }
         // demora  medio segundo luego esconde las imagenes puestas a los buttones
         Handler(Looper.myLooper()?:return).postDelayed({
-            for (i in 0..4) 
+            for (i in 0..4)
             {
                 tableroRespuestas[i]!!.scaleType = ImageView.ScaleType.CENTER_CROP
-                tableroPreguntas[i]!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                tableroPreguntas[i]!!.scaleType = ImageView.ScaleType.CENTER_CROP
                 tableroRespuestas[i]!!.setImageResource(fondo)
                 tableroPreguntas[i]!!.setImageResource(fondo)
             }

@@ -14,6 +14,13 @@
         android:theme="@style/Theme.JuegoCartas"
         tools:targetApi="31">
         <activity
+            android:name=".PruebaEliminar"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Juego"
             android:exported="true">
             <intent-filter>
